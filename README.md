@@ -1,5 +1,9 @@
 # Milestone 5 — 42 Barcelona
 
+[![42 Project](https://img.shields.io/badge/42-Project-00babc?style=flat-square&logo=42)](https://42barcelona.com)
+[![C++98](https://img.shields.io/badge/C++-98-00599C?style=flat-square&logo=c%2B%2B)](https://en.cppreference.com/w/cpp/98)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square)](LICENSE)
+
 This repository contains my work for Milestone 5 of the 42 Common Core at Campus 42 Barcelona.
 
 This milestone focuses on advanced C++, system programming, networking, and web infrastructure, combining low-level programming with real-world server and deployment concepts.
@@ -7,6 +11,8 @@ This milestone focuses on advanced C++, system programming, networking, and web 
 ## Projects
 
 ### 1. Inception
+[![Grade](https://img.shields.io/badge/Grade-125%2F100-success?style=flat-square)](inception/)
+[![Bonus](https://img.shields.io/badge/Bonus-✓-success?style=flat-square)](inception/)
 
 Inception is a DevOps-oriented project where I build a complete web infrastructure using Docker and Docker Compose.
 
@@ -29,6 +35,7 @@ Main concepts covered:
 This project provides a solid understanding of how modern web services are deployed and managed.
 
 ### 2. Webserv
+[![Status](https://img.shields.io/badge/Status-In%20Progress-yellow?style=flat-square)](webserv/)
 
 Webserv consists of implementing a HTTP/1.1 web server in C++, inspired by servers like NGINX.
 
@@ -44,6 +51,11 @@ Key topics addressed:
 The focus is on correctness, performance, and compliance with the HTTP specification, while maintaining clean and maintainable C++ code.
 
 ### 3. CPP Modules (CPP05 → CPP09)
+[![CPP05](https://img.shields.io/badge/CPP05-100%2F100-success?style=flat-square)](cpp/cpp05/)
+[![CPP06](https://img.shields.io/badge/CPP06-100%2F100-success?style=flat-square)](cpp/cpp06/)
+[![CPP07](https://img.shields.io/badge/CPP07-100%2F100-success?style=flat-square)](cpp/cpp07/)
+[![CPP08](https://img.shields.io/badge/CPP08-100%2F100-success?style=flat-square)](cpp/cpp08/)
+[![CPP09](https://img.shields.io/badge/CPP09-100%2F100-success?style=flat-square)](cpp/cpp09/)
 
 This milestone includes CPP modules 05 to 09, which cover advanced C++ object-oriented programming concepts.
 
@@ -69,6 +81,7 @@ milestone-5/
 │   └── cpp09/
 ├── inception/
 ├── webserv/
+├── LICENSE
 └── README.md
 ```
 
@@ -86,6 +99,10 @@ milestone-5/
 * **Networking & HTTP** — Sockets, TCP/IP, HTTP/1.1, multiplexing
 * **DevOps Fundamentals** — Docker, Docker Compose, volumes, container networking
 * **System Programming** — Low-level reasoning, resource control, robustness
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ## Author
 
