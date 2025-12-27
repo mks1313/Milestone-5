@@ -11,8 +11,7 @@ This milestone focuses on advanced C++, system programming, networking, and web 
 ## Projects
 
 ### 1. Inception
-[![Grade](https://img.shields.io/badge/Grade-125%2F100-success?style=flat-square)](inception/)
-[![Bonus](https://img.shields.io/badge/Bonus-✓-success?style=flat-square)](inception/)
+![inception](./badges/inceptione.png) ![inception-bonus](./badges/inceptionm.png)
 
 Inception is a DevOps-oriented project where I build a complete web infrastructure using Docker and Docker Compose.
 
@@ -35,7 +34,7 @@ Main concepts covered:
 This project provides a solid understanding of how modern web services are deployed and managed.
 
 ### 2. Webserv
-[![Status](https://img.shields.io/badge/Status-In%20Progress-yellow?style=flat-square)](webserv/)
+![webserv](./badges/webserve.png) ![webserv-bonus](./badges/webservm.png)
 
 Webserv consists of implementing a HTTP/1.1 web server in C++, inspired by servers like NGINX.
 
@@ -51,11 +50,7 @@ Key topics addressed:
 The focus is on correctness, performance, and compliance with the HTTP specification, while maintaining clean and maintainable C++ code.
 
 ### 3. CPP Modules (CPP05 → CPP09)
-[![CPP05](https://img.shields.io/badge/CPP05-100%2F100-success?style=flat-square)](cpp/cpp05/)
-[![CPP06](https://img.shields.io/badge/CPP06-100%2F100-success?style=flat-square)](cpp/cpp06/)
-[![CPP07](https://img.shields.io/badge/CPP07-100%2F100-success?style=flat-square)](cpp/cpp07/)
-[![CPP08](https://img.shields.io/badge/CPP08-100%2F100-success?style=flat-square)](cpp/cpp08/)
-[![CPP09](https://img.shields.io/badge/CPP09-100%2F100-success?style=flat-square)](cpp/cpp09/)
+![cpp](./badges/cppe.png) ![cpp-bonus](./badges/cppm.png)
 
 This milestone includes CPP modules 05 to 09, which cover advanced C++ object-oriented programming concepts.
 
@@ -73,6 +68,13 @@ All modules follow the C++98 standard, emphasizing disciplined design, correct m
 ## Repository Structure
 ```txt
 milestone-5/
+├── badges/
+│   ├── cppe.png
+│   ├── cppm.png
+│   ├── inceptione.png
+│   ├── inceptionm.png
+│   ├── webserve.png
+│   └── webservm.png
 ├── cpp/
 │   ├── cpp05/
 │   ├── cpp06/
