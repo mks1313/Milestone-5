@@ -16,7 +16,7 @@ Through this project, I learned how to work with **containerization**, **service
 
 This project significantly deepened my understanding of **networking at the system level**, **protocol implementation**, and how web servers work internally. The emphasis is on correctness, performance, and compliance with the HTTP specification.
 
-![Webserv Badge](https://github.com/mks1313/milestone-5/blob/main/badges/webserve.png) ![Webserv Bonus Badge](https://github.com/mks1313/milestone-5/blob/main/badges/webservm.png)
+![Webserv Badge](https://github.com/ayogun/42-project-badges/blob/main/badges/webservm.png)
 
 ### 3. **CPP Modules (CPP05 → CPP09)**
 **CPP Modules** is a series of exercises focused on mastering **advanced C++ programming**. I have worked on key features such as **exceptions and error handling**, **operator overloading**, **polymorphism**, **abstraction**, **STL containers and algorithms**, **templates**, and **type casting**.
