@@ -43,13 +43,6 @@ These modules follow the **C++98 standard**, emphasizing disciplined design, cor
 ## Repository Structure
 ```txt
 milestone-5/
-├── badges/
-│   ├── cppe.png
-│   ├── cppm.png
-│   ├── inceptione.png
-│   ├── inceptionm.png
-│   ├── webserve.png
-│   └── webservm.png
 ├── cpp/
 │   ├── cpp05/
 │   ├── cpp06/
