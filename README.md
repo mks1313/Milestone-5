@@ -23,7 +23,7 @@ This project significantly deepened my understanding of **networking at the syst
 
 These modules follow the **C++98 standard**, emphasizing disciplined design, correct memory management, and predictable behavior. Through these exercises, I learned how to write robust, maintainable C++ code that handles complex scenarios effectively.
 
-![CPP Badge](https://github.com/mks1313/milestone-5/blob/main/badges/cppe.png) ![CPP Bonus Badge](https://github.com/mks1313/milestone-5/blob/main/badges/cppm.png)
+![Cub3D Badge](https://github.com/ayogun/42-project-badges/blob/main/badges/cub3dm.png)
 
 ## My Achievements
 
