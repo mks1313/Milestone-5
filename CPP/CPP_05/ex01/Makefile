@@ -6,7 +6,7 @@
 #    By: mmarinov <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/11/13 18:52:38 by mmarinov          #+#    #+#              #
-#    Updated: 2026/02/28 16:24:13 by mmarinov         ###   ########.fr        #
+#    Updated: 2026/02/28 16:59:05 by mmarinov         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@
 MAKEFLAGS += --silent
 
 # ==== Project ====
-NAME      := Bureaucrat
+NAME      := Form
 
 # ==== Compiler & Flags ====
 CXX       := c++
