@@ -6,7 +6,7 @@
 #    By: mmarinov <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/11/13 18:52:38 by mmarinov          #+#    #+#              #
-#    Updated: 2026/02/28 16:59:05 by mmarinov         ###   ########.fr        #
+#    Updated: 2026/03/06 19:54:39 by mmarinov         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,7 +28,7 @@ SRC_D     := src
 OBJ_D     := objs
 
 # ==== Sources  ====
-SRCS      := main.cpp Bureaucrat.cpp
+SRCS      := main.cpp Bureaucrat.cpp Form.cpp
 
 # ==== Objects / Deps ====
 OBJS      := $(SRCS:%.cpp=$(OBJ_D)/%.o)
