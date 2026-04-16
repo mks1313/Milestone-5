@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secondary Server - Port 8081</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f39c12 0%, #e74c3c 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+        }
+        .container {
+            background: white;
+            padding: 3rem;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            max-width: 600px;
+        }
+        h1 { color: #e74c3c; margin-bottom: 1rem; }
+        p { color: #666; line-height: 1.6; }
+        .port { font-size: 3rem; color: #f39c12; font-weight: bold; }
+        a { color: #e74c3c; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Secondary Server</h1>
+        <div class="port">Port 8081</div>
+        <p>This is a separate virtual host running on port 8081.</p>
+        <p>This demonstrates that webserv can handle multiple ports with different configurations.</p>
+        <p><a href="http://localhost:8080/">Go to main server (port 8080)</a></p>
+    </div>
+</body>
+</html>

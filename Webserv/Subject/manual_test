@@ -1,0 +1,5 @@
+404 (No encontrado) vs un 403 (Prohibido)
+
+siege -b -t 1M http://localhost:8080
+
+O_NONBLOCK

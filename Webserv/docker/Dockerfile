@@ -1,0 +1,97 @@
+# **************************************************************************** #
+#                                                                              #
+#    Dockerfile                                                                #
+#                                                                              #
+#    Webserv Development Environment                                           #
+#    Por defecto usa Alpine. Para Ubuntu, usa Dockerfile.ubuntu                #
+#                                                                              #
+#    Uso:                                                                      #
+#      docker build -t webserv .                    # Alpine (default)         #
+#      docker build -t webserv -f Dockerfile.ubuntu # Ubuntu (42 tester)       #
+#                                                                              #
+#    By: fcela-ga <fcela-ga@student.42barcelona.com>                           #
+#                                                                              #
+# **************************************************************************** #
+
+# ============================================================================ #
+# ALPINE LINUX (DEFAULT) - Ligero pero incompatible con 42 tester             #
+# ============================================================================ #
+
+FROM alpine:3.19
+
+LABEL maintainer="fcela-ga@student.42barcelona.com"
+LABEL description="42 Webserv Development Environment - Alpine Linux"
+LABEL version="2.0"
+LABEL base="alpine"
+
+# Instalar todas las dependencias
+RUN apk update && apk add --no-cache \
+    # Compilación C++
+    g++ \
+    gcc \
+    make \
+    clang \
+    llvm \
+    # Herramientas de depuración
+    gdb \
+    valgrind \
+    strace \
+    ltrace \
+    # Intérpretes CGI
+    python3 \
+    php-cgi \
+    perl \
+    bash \
+    # Herramientas de red y testing
+    curl \
+    wget \
+    netcat-openbsd \
+    bind-tools \
+    apache2-utils \
+    # Utilidades
+    vim \
+    nano \
+    less \
+    tree \
+    file \
+    # Librerías
+    libc-dev \
+    linux-headers \
+    openssl-dev \
+    zlib-dev \
+    # Gestión de procesos
+    procps \
+    && rm -rf /var/cache/apk/*
+
+# Compilar e instalar siege desde código fuente
+RUN apk add --no-cache --virtual .siege-build-deps \
+    automake \
+    autoconf \
+    libtool \
+    sed \
+    && wget http://download.joedog.org/siege/siege-latest.tar.gz \
+    && tar -xzf siege-latest.tar.gz \
+    && cd siege-* \
+    && sed -i 's/PAGESIZE/SIEGE_PAGESIZE/g' src/page.c src/page.h \
+    && ./configure \
+        --prefix=/usr \
+        --sysconfdir=/etc \
+        --mandir=/usr/share/man \
+        --localstatedir=/var \
+    && make \
+    && make install \
+    && cd .. \
+    && rm -rf siege-* siege-latest.tar.gz \
+    && apk del .siege-build-deps
+
+# Crear symlink para python
+RUN ln -sf /usr/bin/python3 /usr/bin/python
+
+# Directorio de trabajo
+WORKDIR /app
+
+# Exponer puertos
+EXPOSE 8080 8081 8082
+
+# Comando por defecto
+CMD ["/bin/bash"]

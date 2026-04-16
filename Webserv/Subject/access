@@ -1,0 +1,24 @@
+Configuración de los 4 servidores
+
+#           Puerto      server_name                     Acceso
+Server 1    8080        localhost, webserv.local        http://localhost:8080 ✅
+Server 2    8081        localhost, secondary.local      http://localhost:8081 ✅
+Server 3    8082        restricted.local                http://restricted.local:8082
+Server 4    8080        example.local, test.local       ← este es el que buscas
+
+Cómo acceder al Server 4
+El webserver lo distingue del Server 1 por el header Host de la petición HTTP.
+Para acceder necesitas añadir una entrada en tu /etc/hosts:
+
+bash:
+echo "127.0.0.1  example.local" | sudo tee -a /etc/hosts
+# o bien
+echo "127.0.0.1  test.local" | sudo tee -a /etc/hosts
+
+Y luego accedes con:
+http://example.local:8080
+# o
+http://test.local:8080
+
+El root de este servidor apunta a ./www/example, distinto del Server 1 que apunta a ./www.
+De ahí que sin el server_name correcto en el header, el webserver siempre te redirige al Server 1 por defecto.

@@ -1,0 +1,95 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Dockerfile.ubuntu                                  :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: fcela-ga <fcela-ga@student.42barcelona.com +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: Invalid Date        by 2barcelona.com>   #+#    #+#              #
+#    Updated: 2025/12/25 23:19:18 by fcela-ga         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
+FROM ubuntu:22.04
+
+LABEL maintainer="fcela-ga@student.42barcelona.com"
+LABEL description="42 Webserv Development Environment - Ubuntu Linux"
+LABEL version="3.0"
+LABEL base="ubuntu"
+
+# 1. Variables de entorno
+ENV DEBIAN_FRONTEND=noninteractive
+ENV TZ=Europe/Madrid
+
+# 2. FIX QUIRÚRGICO DE APT (La solución real)
+# El archivo 70debconf obliga a pre-configurar paquetes, causando el error
+# cuando apt-utils no existe. Comentamos esa línea para romper el ciclo.
+RUN sed -i 's/^DPkg::Pre-Install-Pkgs/#DPkg::Pre-Install-Pkgs/' /etc/apt/apt.conf.d/70debconf
+
+# 3. FASE DE INSTALACIÓN LIMPIA
+# Ahora podemos instalar todo (incluyendo apt-utils) sin que el sistema
+# se queje, porque hemos desactivado la comprobación prematura.
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    # Herramientas base
+    apt-utils \
+    dialog \
+    locales \
+    # Compiladores
+    g++ \
+    gcc \
+    make \
+    clang \
+    llvm \
+    # Depuración
+    gdb \
+    valgrind \
+    strace \
+    ltrace \
+    # CGI
+    python3 \
+    python3-pip \
+    php-cgi \
+    perl \
+    # Red y Tests
+    curl \
+    wget \
+    netcat-openbsd \
+    dnsutils \
+    apache2-utils \
+    siege \
+    # Utilidades
+    vim \
+    nano \
+    less \
+    tree \
+    file \
+    procps \
+    # Librerías
+    libc-dev \
+    linux-libc-dev \
+    libssl-dev \
+    zlib1g-dev \
+    # Limpieza final
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+
+# 4. CONFIGURACIÓN DE LOCALES
+# Generamos el idioma correctamente después de la instalación
+RUN locale-gen en_US.UTF-8 && update-locale LANG=en_US.UTF-8
+
+# 5. DEFINICIÓN FINAL DE ENTORNO
+ENV LANG=en_US.UTF-8 \
+    LANGUAGE=en_US:en \
+    LC_ALL=en_US.UTF-8
+
+# Configuración final
+RUN ln -sf /usr/bin/python3 /usr/bin/python
+
+# Directorio de trabajo
+WORKDIR /app
+
+# Exponer puertos
+EXPOSE 8080 8081 8082
+
+# Comando por defecto
+CMD ["/bin/bash"]

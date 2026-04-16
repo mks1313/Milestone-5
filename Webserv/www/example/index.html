@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Example.com - Virtual Host</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #9b59b6 0%, #3498db 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+        }
+        .container {
+            background: white;
+            padding: 3rem;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            max-width: 600px;
+        }
+        h1 { color: #9b59b6; margin-bottom: 1rem; }
+        .domain { font-size: 2rem; color: #3498db; font-weight: bold; margin: 1rem 0; }
+        p { color: #666; line-height: 1.6; }
+        code { background: #f5f5f5; padding: 0.2rem 0.5rem; border-radius: 4px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Virtual Host Demo</h1>
+        <div class="domain">example.com</div>
+        <p>This page is served when accessing the server with Host: example.com</p>
+        <p>Test with: <code>curl --resolve example.com:8080:127.0.0.1 http://example.com:8080/</code></p>
+        <p>This demonstrates virtual host support based on the Host header.</p>
+    </div>
+</body>
+</html>

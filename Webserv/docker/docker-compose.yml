@@ -1,0 +1,94 @@
+# **************************************************************************** #
+#                                                                              #
+#    docker-compose.yml                                                        #
+#                                                                              #
+#    Webserv Development Environment                                           #
+#    Soporta Alpine (ligero) y Ubuntu (compatible con 42 tester)               #
+#                                                                              #
+#    Uso:                                                                      #
+#      docker-compose up webserv              # Alpine (default)               #
+#      docker-compose up webserv-ubuntu       # Ubuntu (42 tester)             #
+#                                                                              #
+#    By: fcela-ga <fcela-ga@student.42barcelona.com>                           #
+#                                                                              #
+# **************************************************************************** #
+
+# Definimos la parte común aquí para no repetirla
+x-common-config: &common-config
+  stdin_open: true
+  tty: true
+  ports:
+    - "8080:8080"
+    - "8081:8081"
+    - "8082:8082"
+  volumes:
+    - ../src:/app/src:rw
+    - ../inc:/app/inc:rw
+    - ../Makefile:/app/Makefile:rw
+    - ../config:/app/config:rw
+    - ../www:/app/www:rw
+    - ../cgi-bin:/app/cgi-bin:rw
+    - ../bin:/app/bin:rw
+    - ../obj:/app/obj:rw
+    - ../dep:/app/dep:rw
+    - ../logs:/app/logs:rw
+    - ../tests:/app/tests:rw
+    - ../testers:/app/testers:rw
+    - ../YoupiBanane:/app/YoupiBanane:rw
+  environment:
+    - TERM=xterm-256color
+    - LANG=C.UTF-8
+  networks:
+    webserv-net:
+      aliases:
+        - webserv # <--- Este alias es el que usa Nginx para encontrarlos
+  depends_on:
+    - proxy
+  restart: "no"
+  command: /bin/bash
+
+services:
+  # =========================================================================
+  # ALPINE - Desarrollo general
+  # =========================================================================
+  webserv:
+    <<: *common-config
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: webserv-alpine:latest
+    container_name: webserv-alpine # Nombre único para evitar conflictos
+
+  # =========================================================================
+  # UBUNTU - Compatible con 42 tester
+  # =========================================================================
+  webserv-ubuntu:
+    <<: *common-config
+    build:
+      context: .
+      dockerfile: Dockerfile.ubuntu
+    image: webserv-ubuntu:latest
+    container_name: webserv-ubuntu # Nombre único para evitar conflictos
+    profiles:
+      - ubuntu
+
+  # =========================================================================
+  # Proxy Inverso (Nginx)
+  # =========================================================================
+  proxy:
+    image: nginx:alpine
+    container_name: webserv-proxy
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    ports:
+      - "80:80" # Acceso vía localhost/example/
+      - "8083:8083" # example.local
+      - "8084:8084" # secondary.local
+      - "8085:8085" # restricted.local
+      - "8086:8086" # webserv.local
+    networks:
+      - webserv-net
+
+networks:
+  webserv-net:
+    driver: bridge

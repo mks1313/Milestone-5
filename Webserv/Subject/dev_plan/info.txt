@@ -1,0 +1,41 @@
+Plan de desarrollo completo para el webserv. Aquí tienes el resumen:
+📋 Estructura del Plan
+7 Épicas (Milestones)
+Epic	Nombre										Puntos		Duración
+1		Fundamentos (Utils, MimeTypes)				21			1 semana
+2		Sockets (Server, Client, poll)				30			2 semanas
+3		HTTP Parser (Request, Response)				34			2 semanas
+4		Configuración (Config parser)				19			1.5 semanas
+5		Handlers (GET, DELETE, routing)				22			2 semanas
+6		CGI (fork, exec, pipes)						22			2 semanas
+7		Features Avanzadas (Upload, Sessions)		16			1.5 semanas
+
+
+43 Issues Detalladas
+Cada issue incluye:
+• Descripción clara
+• Archivos a modificar
+• Checklist de tareas
+• Criterios de aceptación con código de ejemplo
+• Puntos de esfuerzo estimados
+
+
+Distribución para 3 Desarrolladores
+Dev A (Parser):     Request, Response, Handlers → 55 puntos
+Dev B (Network):    Server, Client, Upload      → 55 puntos  
+Dev C (Config/CGI): Utils, Config, CGI          → 55 puntos
+
+
+Archivos Entregados:
+• WEBSERV_DEVELOPMENT_PLAN.md - Documento completo con todas las issues
+• github_issues.csv - CSV importable a GitHub/GitLab
+• DEVELOPMENT_DIAGRAM.md - Diagramas de dependencias y timeline
+
+
+Flujo de Trabajo Sugerido
+Semana 1:    Epic 1 (todos en paralelo)
+Semana 2-3:  Epic 2 + Epic 3 (en paralelo)
+Semana 3-4:  Epic 4 + Integración parcial
+Semana 4-5:  Epic 5 (todos colaborando)
+Semana 5-6:  Epic 6 + Epic 7
+Semana 7:    Testing final e integración

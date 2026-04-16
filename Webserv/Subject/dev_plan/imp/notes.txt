@@ -1,0 +1,16 @@
+Script con GitHub CLI (Recomendado) ✅
+Ya te creé el script. Úsalo así:
+bash# 1. Instalar GitHub CLI
+sudo apt install gh          # Ubuntu/Debian
+# o
+brew install gh              # Mac
+
+# 2. Autenticarte
+gh auth login
+
+# 3. Descargar y ejecutar el script
+chmod +x import_issues_to_github.sh
+./import_issues_to_github.sh tu-usuario/webserv
+
+
+./import_issues_to_github.sh felipecela/42-C06-Prj14-Webserv

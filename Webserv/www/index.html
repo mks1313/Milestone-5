@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Webserv - 42 Project</title>
+    <style>
+        :root {
+            --primary: #667eea;
+            --secondary: #764ba2;
+            --success: #27ae60;
+            --danger: #e74c3c;
+            --dark: #2c3e50;
+            --light: #ecf0f1;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            min-height: 100vh;
+            color: var(--dark);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        header {
+            text-align: center;
+            color: white;
+            padding: 3rem 0;
+        }
+
+        header h1 {
+            font-size: 3.5rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            margin-bottom: 0.5rem;
+        }
+
+        header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .card {
+            background: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card h2 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-size: 1.4rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .card p {
+            color: #666;
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+
+        input,
+        textarea,
+        select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            margin-bottom: 0.75rem;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        input:focus,
+        textarea:focus,
+        select:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        button,
+        .btn {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: opacity 0.3s, transform 0.2s;
+            text-decoration: none;
+            text-align: center;
+        }
+
+        button:hover,
+        .btn:hover {
+            opacity: 0.9;
+            transform: scale(1.02);
+        }
+
+        .btn-danger {
+            background: linear-gradient(135deg, var(--danger), #c0392b);
+        }
+
+        .link-list {
+            list-style: none;
+        }
+
+        .link-list li {
+            margin-bottom: 0.5rem;
+        }
+
+        .link-list a {
+            color: var(--primary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+
+        .link-list a:hover {
+            background: var(--light);
+        }
+
+        .info-box {
+            background: var(--light);
+            padding: 1rem;
+            border-radius: 8px;
+            font-family: monospace;
+            font-size: 0.9rem;
+            margin-top: 1rem;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem;
+            color: white;
+            opacity: 0.8;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.25rem 0.5rem;
+            background: var(--primary);
+            color: white;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            margin-left: 0.5rem;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <h1>Webserv</h1>
+            <p>HTTP Server Implementation - 42 School Project</p>
+            <p style="margin-top: 0.5rem; font-size: 0.9rem;">by fcela-ga@student.42barcelona.com<br>
+                mmarinov@student.42barcelona.com<br>
+                vberdugo@student.42barcelona.com</p>
+        </header>
+
+        <div class="grid">
+            <div class="card">
+                <h2>CGI Testing</h2>
+                <p>Test CGI scripts with various programming languages.</p>
+                <ul class="link-list">
+                    <li><a href="/cgi-bin/test.py">Python CGI Test Script</a></li>
+                    <li><a href="/cgi-bin/info.py">System Info (Python)</a></li>
+                    <li><a href="/cgi-bin/session.py">Session Demo (Python)</a></li>
+                    <li><a href="/cgi-bin/upload.py">File Upload Handler</a></li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <h2>File Upload Test</h2>
+                <p>Test file upload functionality with multipart/form-data.</p>
+                <form action="/upload" method="POST" enctype="multipart/form-data">
+                    <input type="file" name="file" required>
+                    <input type="text" name="description" placeholder="File description (optional)">
+                    <button type="submit">Upload File</button>
+                </form>
+            </div>
+
+            <div class="card">
+                <h2>POST Form Test</h2>
+                <p>Test POST requests with form data.</p>
+                <form action="/cgi-bin/test.py" method="POST">
+                    <input type="text" name="name" placeholder="Your name" required>
+                    <input type="email" name="email" placeholder="Your email" required>
+                    <textarea name="message" placeholder="Your message" rows="3"></textarea>
+                    <button type="submit">Submit POST</button>
+                </form>
+            </div>
+
+            <div class="card">
+                <h2>GET Parameters Test</h2>
+                <p>Test GET requests with query parameters.</p>
+                <form action="/cgi-bin/test.py" method="GET">
+                    <input type="text" name="search" placeholder="Search query">
+                    <select name="category">
+                        <option value="">Select category</option>
+                        <option value="tech">Technology</option>
+                        <option value="science">Science</option>
+                        <option value="art">Art</option>
+                    </select>
+                    <button type="submit">Submit GET</button>
+                </form>
+            </div>
+
+            <div class="card">
+                <h2>DELETE Method Test</h2>
+                <p>Test DELETE request functionality.</p>
+                <form id="deleteForm">
+                    <input type="text" id="deleteFile" placeholder="File path (e.g., /deletable/test.txt)">
+                    <button type="button" class="btn btn-danger" onclick="testDelete()">Delete File</button>
+                </form>
+                <div id="deleteResult" class="info-box" style="display:none;"></div>
+            </div>
+
+            <div class="card">
+                <h2>Server Features</h2>
+                <p>This webserv implementation supports:</p>
+                <ul class="link-list">
+                    <li>GET, POST, DELETE methods</li>
+                    <li>Static file serving</li>
+                    <li>CGI execution (Python, PHP, Perl)</li>
+                    <li>File uploads</li>
+                    <li>Directory listing</li>
+                    <li>Custom error pages</li>
+                    <li>Multiple virtual hosts</li>
+                    <li>Cookies and Sessions <span class="badge">Bonus</span></li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <h2>Directory Listing</h2>
+                <p>Browse server directories.</p>
+                <ul class="link-list">
+                    <li><a href="/uploads/">Uploads Directory</a></li>
+                    <li><a href="/static/">Static Files</a></li>
+                    <li><a href="/deletable/">Deletable Files</a></li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <h2>Error Pages Test</h2>
+                <p>Test custom error page responses.</p>
+                <ul class="link-list">
+                    <li><a href="/nonexistent-page">404 Not Found</a></li>
+                    <li><a href="/restricted">403 Forbidden Area</a></li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <h2>Redirect Test</h2>
+                <p>Test HTTP redirections.</p>
+                <ul class="link-list">
+                    <li><a href="/old-page">301 Permanent Redirect</a></li>
+                    <li><a href="/google">External Redirect</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <footer>
+            <p>Webserv/1.0 | 42 Barcelona</p>
+        </footer>
+    </div>
+
+    <script>
+        function testDelete() {
+            var path = document.getElementById('deleteFile').value;
+            if (!path) { alert('Please enter a file path'); return; }
+            var resultDiv = document.getElementById('deleteResult');
+            resultDiv.style.display = 'block';
+            resultDiv.textContent = 'Sending DELETE request...';
+            var xhr = new XMLHttpRequest();
+            xhr.open('DELETE', path, true);
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4) {
+                    resultDiv.textContent = 'Status: ' + xhr.status + ' ' + xhr.statusText;
+                    if (xhr.status === 204) resultDiv.textContent += '\nFile deleted successfully!';
+                    else if (xhr.status === 404) resultDiv.textContent += '\nFile not found';
+                    else if (xhr.status === 403) resultDiv.textContent += '\nPermission denied';
+                }
+            };
+            xhr.send();
+        }
+    </script>
+</body>
+
+</html>

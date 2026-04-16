@@ -1,0 +1,584 @@
+title,body,labels,milestone,assignee
+"[Epic 1] #1: Implementar funciones básicas de string","## Descripción
+Implementar funciones de utilidad para manipulación de strings en el namespace Utils.
+
+## Archivos
+- `src/Utils.cpp`
+- `inc/Utils.hpp`
+
+## Tareas
+- [ ] Crear namespace `Utils`
+- [ ] Implementar `trim()` - eliminar espacios al inicio/final
+- [ ] Implementar `toLower()` y `toUpper()`
+- [ ] Implementar `split()` con char y string delimitadores
+- [ ] Implementar `startsWith()` y `endsWith()`
+- [ ] Implementar `replaceAll()`
+
+## Criterios de Aceptación
+```cpp
+assert(Utils::trim(""  hello  "") == ""hello"");
+assert(Utils::toLower(""HeLLo"") == ""hello"");
+assert(Utils::split(""a,b,c"", ',').size() == 3);
+```
+
+## Puntos: 3","enhancement,epic-1-foundation","v0.1-foundation",
+"[Epic 1] #2: Implementar conversiones numéricas","## Descripción
+Implementar funciones para convertir entre strings y números.
+
+## Archivos
+- `src/Utils.cpp`
+
+## Tareas
+- [ ] `stringToInt()` - string a entero
+- [ ] `stringToSizeT()` - string a size_t
+- [ ] `intToString()` - entero a string
+- [ ] `sizeTToString()` - size_t a string
+- [ ] `hexToSizeT()` - hexadecimal a size_t
+
+## Puntos: 2","enhancement,epic-1-foundation","v0.1-foundation",
+"[Epic 1] #3: Implementar utilidades de archivos","## Descripción
+Implementar funciones para manejo de archivos y rutas.
+
+## Archivos
+- `src/Utils.cpp`
+
+## Tareas
+- [ ] `fileExists()` - verificar existencia
+- [ ] `isDirectory()` - verificar si es directorio
+- [ ] `isReadable()`, `isWritable()`, `isExecutable()`
+- [ ] `getFileSize()` - obtener tamaño
+- [ ] `getFileExtension()` - obtener extensión
+- [ ] `getFileName()` y `getDirectory()`
+- [ ] `readFile()` - leer contenido completo
+- [ ] `writeFile()` - escribir contenido
+- [ ] `deleteFile()` - eliminar archivo
+- [ ] `normalizePath()` - normalizar rutas
+- [ ] `joinPath()` - unir rutas
+
+## Puntos: 5","enhancement,epic-1-foundation","v0.1-foundation",
+"[Epic 1] #4: Implementar utilidades HTTP","## Descripción
+Implementar funciones específicas para el protocolo HTTP.
+
+## Archivos
+- `src/Utils.cpp`
+
+## Tareas
+- [ ] `urlDecode()` - decodificar URL (%20 → espacio)
+- [ ] `urlEncode()` - codificar URL
+- [ ] `getHttpDate()` - formato RFC 7231
+- [ ] `getStatusMessage()` - código a mensaje
+- [ ] `isValidMethod()` - validar métodos HTTP
+
+## Puntos: 4","enhancement,epic-1-foundation","v0.1-foundation",
+"[Epic 1] #5: Implementar sistema de logging","## Descripción
+Implementar funciones de logging con colores ANSI.
+
+## Archivos
+- `src/Utils.cpp`
+
+## Tareas
+- [ ] `logInfo()` - mensajes informativos (verde)
+- [ ] `logWarning()` - advertencias (amarillo)
+- [ ] `logError()` - errores (rojo)
+- [ ] `logDebug()` - debug (cyan)
+
+## Puntos: 2","enhancement,epic-1-foundation","v0.1-foundation",
+"[Epic 1] #6: Implementar singleton MimeTypes","## Descripción
+Implementar clase singleton para mapeo de extensiones a tipos MIME.
+
+## Archivos
+- `src/MimeTypes.cpp`
+- `inc/MimeTypes.hpp`
+
+## Tareas
+- [ ] Implementar patrón Singleton
+- [ ] Crear mapa de extensiones → tipos MIME
+- [ ] `getMimeType(extension)`
+- [ ] `getMimeTypeByFile(filename)`
+- [ ] `isTextType()` y `isBinaryType()`
+- [ ] `addMimeType()` - añadir tipos personalizados
+
+## Puntos: 3","enhancement,epic-1-foundation","v0.1-foundation",
+"[Epic 1] #7: Crear webserv.hpp","## Descripción
+Crear header principal con includes y constantes.
+
+## Archivos
+- `inc/webserv.hpp`
+
+## Tareas
+- [ ] Incluir headers C++ estándar necesarios
+- [ ] Incluir headers de sistema
+- [ ] Definir constantes del servidor
+- [ ] Definir códigos HTTP como macros
+- [ ] Definir colores para logging
+
+## Puntos: 2","enhancement,epic-1-foundation","v0.1-foundation",
+"[Epic 2] #8: Crear estructura básica de Server","## Descripción
+Implementar la clase Server con capacidad de crear sockets de escucha.
+
+## Archivos
+- `src/Server.cpp`
+- `inc/Server.hpp`
+
+## Tareas
+- [ ] Definir clase Server con constructor/destructor
+- [ ] Atributos: `_running`, `_listenSockets`, `_pollFds`
+- [ ] Implementar `_createSocket(host, port)`
+- [ ] Implementar `_setNonBlocking(fd)`
+
+## Puntos: 5","enhancement,epic-2-networking","v0.2-networking",
+"[Epic 2] #9: Implementar event loop con poll()","## Descripción
+Implementar el bucle principal del servidor usando poll().
+
+## Archivos
+- `src/Server.cpp`
+
+## Tareas
+- [ ] Implementar `_rebuildPollFds()`
+- [ ] Implementar `run()` con loop principal
+- [ ] Implementar `stop()`
+- [ ] Manejar eventos POLLIN, POLLOUT, POLLERR
+
+## Puntos: 8","enhancement,epic-2-networking,critical","v0.2-networking",
+"[Epic 2] #10: Manejar señales de sistema","## Descripción
+Configurar handlers para señales SIGINT, SIGTERM y SIGPIPE.
+
+## Archivos
+- `src/Server.cpp`
+
+## Tareas
+- [ ] Crear variable global `g_serverRunning`
+- [ ] Implementar `_signalHandler(int sig)`
+- [ ] Configurar handlers con sigaction
+- [ ] Ignorar SIGPIPE
+
+## Puntos: 2","enhancement,epic-2-networking","v0.2-networking",
+"[Epic 2] #11: Implementar clase Client","## Descripción
+Implementar clase para gestionar conexiones de clientes.
+
+## Archivos
+- `src/Client.cpp`
+- `inc/Client.hpp`
+
+## Tareas
+- [ ] Definir enum ClientState
+- [ ] Atributos: fd, ip, port, state, buffers, lastActivity
+- [ ] Métodos de buffer
+- [ ] Métodos de estado
+- [ ] Métodos de timeout
+
+## Puntos: 5","enhancement,epic-2-networking","v0.2-networking",
+"[Epic 2] #12: Aceptar nuevas conexiones","## Descripción
+Implementar aceptación de conexiones TCP entrantes.
+
+## Archivos
+- `src/Server.cpp`
+
+## Tareas
+- [ ] Implementar `_acceptNewConnection(listenFd)`
+- [ ] Verificar límite de clientes
+- [ ] Hacer socket no bloqueante
+- [ ] Crear objeto Client
+
+## Puntos: 3","enhancement,epic-2-networking","v0.2-networking",
+"[Epic 2] #13: Leer y escribir datos de clientes","## Descripción
+Implementar lectura y escritura de datos en sockets de clientes.
+
+## Archivos
+- `src/Server.cpp`
+
+## Tareas
+- [ ] Implementar `_handleClientRead(clientFd)`
+- [ ] Implementar `_handleClientWrite(clientFd)`
+- [ ] Manejar errores EAGAIN
+- [ ] Actualizar lastActivity
+
+## Puntos: 4","enhancement,epic-2-networking","v0.2-networking",
+"[Epic 2] #14: Cerrar conexiones y timeouts","## Descripción
+Implementar cierre de conexiones y detección de timeouts.
+
+## Archivos
+- `src/Server.cpp`
+
+## Tareas
+- [ ] Implementar `_closeClient(clientFd)`
+- [ ] Implementar `_checkTimeouts()`
+- [ ] Limpiar recursos CGI si hay
+
+## Puntos: 3","enhancement,epic-2-networking","v0.2-networking",
+"[Epic 3] #15: Estructura base de Request","## Descripción
+Crear la estructura básica de la clase Request.
+
+## Archivos
+- `src/Request.cpp`
+- `inc/Request.hpp`
+
+## Tareas
+- [ ] Definir enum ParseState
+- [ ] Atributos: method, uri, headers, body, state
+- [ ] Constructor que inicializa estado
+- [ ] Método reset()
+
+## Puntos: 3","enhancement,epic-3-http-parser","v0.3-http-parser",
+"[Epic 3] #16: Parsear línea de petición","## Descripción
+Implementar parsing de la primera línea de la petición HTTP.
+
+## Archivos
+- `src/Request.cpp`
+
+## Tareas
+- [ ] Implementar `_parseRequestLine(line)`
+- [ ] Validar método, URI y versión
+- [ ] Implementar `_parseUri()`
+- [ ] Manejar errores 400, 501, 505
+
+## Puntos: 4","enhancement,epic-3-http-parser,critical","v0.3-http-parser",
+"[Epic 3] #17: Parsear headers HTTP","## Descripción
+Implementar parsing de headers HTTP.
+
+## Archivos
+- `src/Request.cpp`
+
+## Tareas
+- [ ] Implementar `_parseHeader(line)`
+- [ ] Implementar `_normalizeHeaderName(name)`
+- [ ] Detectar Content-Length y Transfer-Encoding
+- [ ] Detectar fin de headers
+
+## Puntos: 4","enhancement,epic-3-http-parser,critical","v0.3-http-parser",
+"[Epic 3] #18: Parsear body normal y chunked","## Descripción
+Implementar parsing del body de la petición.
+
+## Archivos
+- `src/Request.cpp`
+
+## Tareas
+- [ ] Parsear body con Content-Length
+- [ ] Implementar `_parseChunkedBody()`
+- [ ] Detectar completitud del body
+
+## Puntos: 5","enhancement,epic-3-http-parser","v0.3-http-parser",
+"[Epic 3] #19: Parsear datos especiales","## Descripción
+Implementar parsing de cookies, query strings y multipart.
+
+## Archivos
+- `src/Request.cpp`
+
+## Tareas
+- [ ] Implementar `_parseHost()`
+- [ ] Implementar `_parseCookies()`
+- [ ] Implementar `_parseQueryString()`
+- [ ] Implementar `_parseMultipartBody()`
+
+## Puntos: 4","enhancement,epic-3-http-parser","v0.3-http-parser",
+"[Epic 3] #20: Método principal parse()","## Descripción
+Implementar el método principal de parsing.
+
+## Archivos
+- `src/Request.cpp`
+
+## Tareas
+- [ ] Implementar `parse(data)`
+- [ ] Implementar `appendData(data)`
+- [ ] Máquina de estados de parsing
+
+## Puntos: 3","enhancement,epic-3-http-parser,critical","v0.3-http-parser",
+"[Epic 3] #21: Estructura base de Response","## Descripción
+Crear la estructura básica de la clase Response.
+
+## Archivos
+- `src/Response.cpp`
+- `inc/Response.hpp`
+
+## Tareas
+- [ ] Atributos: statusCode, headers, body
+- [ ] Constructor con defaults
+- [ ] Setters para configurar respuesta
+
+## Puntos: 3","enhancement,epic-3-http-parser","v0.3-http-parser",
+"[Epic 3] #22: Construir respuesta HTTP","## Descripción
+Implementar generación de respuesta HTTP válida.
+
+## Archivos
+- `src/Response.cpp`
+
+## Tareas
+- [ ] Implementar `build()`
+- [ ] Implementar `buildHeaders()`
+- [ ] Formato correcto con CRLF
+
+## Puntos: 3","enhancement,epic-3-http-parser,critical","v0.3-http-parser",
+"[Epic 3] #23: Builders estáticos de Response","## Descripción
+Implementar métodos factory para tipos comunes de respuesta.
+
+## Archivos
+- `src/Response.cpp`
+
+## Tareas
+- [ ] `makeError(code, config)`
+- [ ] `makeRedirect(code, location)`
+- [ ] `makeFile(path, contentType)`
+- [ ] `makeDirectoryListing(path, uri)`
+- [ ] `makeFromCGI(cgiOutput)`
+
+## Puntos: 5","enhancement,epic-3-http-parser","v0.3-http-parser",
+"[Epic 4] #24: Implementar LocationConfig","## Descripción
+Implementar clase para configuración de locations.
+
+## Archivos
+- `src/LocationConfig.cpp`
+- `inc/LocationConfig.hpp`
+
+## Tareas
+- [ ] Atributos: path, root, index, methods, cgi, etc.
+- [ ] Getters y setters
+- [ ] `isMethodAllowed(method)`
+- [ ] `getCgiHandler(extension)`
+
+## Puntos: 4","enhancement,epic-4-config","v0.4-config",
+"[Epic 4] #25: Implementar ServerConfig","## Descripción
+Implementar clase para configuración de servidor.
+
+## Archivos
+- `src/ServerConfig.cpp`
+- `inc/ServerConfig.hpp`
+
+## Tareas
+- [ ] Atributos: host, port, serverNames, locations, etc.
+- [ ] Getters y setters
+- [ ] `findLocation(uri)`
+- [ ] `matchServerName(host)`
+
+## Puntos: 4","enhancement,epic-4-config","v0.4-config",
+"[Epic 4] #26: Parser de configuración","## Descripción
+Implementar parser de archivos de configuración estilo NGINX.
+
+## Archivos
+- `src/Config.cpp`
+- `inc/Config.hpp`
+
+## Tareas
+- [ ] `parse(filename)`
+- [ ] `_parseServer(stream)`
+- [ ] `_parseLocation(stream, server)`
+- [ ] Tokenizer y parser de directivas
+
+## Puntos: 8","enhancement,epic-4-config,critical","v0.4-config",
+"[Epic 4] #27: Validación de configuración","## Descripción
+Implementar validación de la configuración parseada.
+
+## Archivos
+- `src/Config.cpp`
+
+## Tareas
+- [ ] `validate()`
+- [ ] Clase ConfigException
+- [ ] `findServer(host, port)`
+- [ ] Verificar duplicados
+
+## Puntos: 3","enhancement,epic-4-config","v0.4-config",
+"[Epic 5] #28: Implementar _processRequest()","## Descripción
+Implementar el router principal de peticiones.
+
+## Archivos
+- `src/Server.cpp`
+
+## Tareas
+- [ ] Seleccionar ServerConfig
+- [ ] Encontrar LocationConfig
+- [ ] Verificar redirect, método y body size
+- [ ] Routing a handlers
+
+## Puntos: 5","enhancement,epic-5-handlers,critical","v0.5-handlers",
+"[Epic 5] #29: Resolver rutas de archivos","## Descripción
+Implementar resolución de paths de archivos.
+
+## Archivos
+- `src/Server.cpp`
+
+## Tareas
+- [ ] Implementar `_resolvePath(request, location, server)`
+- [ ] Manejar root y alias
+- [ ] Normalizar y prevenir path traversal
+
+## Puntos: 3","enhancement,epic-5-handlers","v0.5-handlers",
+"[Epic 5] #30: Handler GET para archivos","## Descripción
+Implementar handler para peticiones GET.
+
+## Archivos
+- `src/Server.cpp`
+
+## Tareas
+- [ ] Implementar `_handleGet()`
+- [ ] Manejar archivos y directorios
+- [ ] Buscar archivo índice
+- [ ] Soporte para HEAD
+
+## Puntos: 6","enhancement,epic-5-handlers,critical","v0.5-handlers",
+"[Epic 5] #31: Handler DELETE","## Descripción
+Implementar handler para peticiones DELETE.
+
+## Archivos
+- `src/Server.cpp`
+
+## Tareas
+- [ ] Implementar `_handleDelete()`
+- [ ] Verificar existencia y permisos
+- [ ] Eliminar archivo
+
+## Puntos: 2","enhancement,epic-5-handlers","v0.5-handlers",
+"[Epic 5] #32: Enviar respuestas de error","## Descripción
+Implementar método para enviar errores HTTP.
+
+## Archivos
+- `src/Server.cpp`
+
+## Tareas
+- [ ] Implementar `_sendErrorResponse(client, code)`
+- [ ] Usar páginas de error personalizadas si hay
+- [ ] Desactivar keep-alive
+
+## Puntos: 2","enhancement,epic-5-handlers","v0.5-handlers",
+"[Epic 5] #33: Generar listado de directorios","## Descripción
+Implementar generación de HTML para listado de directorios.
+
+## Archivos
+- `src/Response.cpp`
+
+## Tareas
+- [ ] Implementar `makeDirectoryListing()`
+- [ ] Leer directorio con opendir/readdir
+- [ ] Generar HTML con estilos
+
+## Puntos: 4","enhancement,epic-5-handlers","v0.5-handlers",
+"[Epic 6] #34: Estructura CGIHandler","## Descripción
+Crear la estructura básica de la clase CGIHandler.
+
+## Archivos
+- `src/CGIHandler.cpp`
+- `inc/CGIHandler.hpp`
+
+## Tareas
+- [ ] Atributos: request, config, scriptPath, output
+- [ ] Setters para configurar
+- [ ] Getters para resultados
+
+## Puntos: 3","enhancement,epic-6-cgi","v0.6-cgi",
+"[Epic 6] #35: Construir entorno CGI","## Descripción
+Implementar construcción de variables de entorno CGI.
+
+## Archivos
+- `src/CGIHandler.cpp`
+
+## Tareas
+- [ ] Implementar `_buildEnvironment()`
+- [ ] Variables obligatorias RFC 3875
+- [ ] Convertir HTTP headers a HTTP_*
+- [ ] Conversión a char**
+
+## Puntos: 5","enhancement,epic-6-cgi","v0.6-cgi",
+"[Epic 6] #36: Fork y exec del CGI","## Descripción
+Implementar ejecución del proceso CGI.
+
+## Archivos
+- `src/CGIHandler.cpp`
+
+## Tareas
+- [ ] Implementar `startExecution()`
+- [ ] Crear pipes
+- [ ] Fork proceso hijo
+- [ ] Redirigir stdio con dup2
+- [ ] Ejecutar con execve
+
+## Puntos: 6","enhancement,epic-6-cgi,critical","v0.6-cgi",
+"[Epic 6] #37: Integrar CGI en Server","## Descripción
+Integrar el handler CGI en el servidor.
+
+## Archivos
+- `src/Server.cpp`
+
+## Tareas
+- [ ] Implementar `_isCgiRequest()`
+- [ ] Implementar `_handleCgi()`
+- [ ] Implementar `_handleCgiRead()`
+- [ ] Implementar `_prepareCgiResponse()`
+
+## Puntos: 5","enhancement,epic-6-cgi,critical","v0.6-cgi",
+"[Epic 6] #38: Parsear output CGI","## Descripción
+Implementar parsing de la salida del CGI.
+
+## Archivos
+- `src/CGIHandler.cpp`
+
+## Tareas
+- [ ] Implementar `parseCgiOutput()`
+- [ ] Extraer headers y body
+- [ ] Detectar Status header
+
+## Puntos: 3","enhancement,epic-6-cgi","v0.6-cgi",
+"[Epic 7] #39: Handler POST para uploads","## Descripción
+Implementar handler POST con soporte para uploads.
+
+## Archivos
+- `src/Server.cpp`
+
+## Tareas
+- [ ] Implementar `_handlePost()`
+- [ ] Implementar `_handleFileUpload()`
+- [ ] Guardar archivos multipart
+- [ ] Sanitizar nombres
+
+## Puntos: 5","enhancement,epic-7-advanced","v0.7-advanced",
+"[Epic 7] #40: Implementar SessionManager","## Descripción
+Implementar gestión de sesiones con cookies.
+
+## Archivos
+- `src/SessionManager.cpp`
+- `inc/SessionManager.hpp`
+
+## Tareas
+- [ ] Patrón Singleton
+- [ ] Estructura Session
+- [ ] CRUD de sesiones
+- [ ] Limpieza de expiradas
+
+## Puntos: 5","enhancement,epic-7-advanced","v0.7-advanced",
+"[Epic 7] #41: Soporte Keep-Alive","## Descripción
+Implementar reutilización de conexiones TCP.
+
+## Archivos
+- `src/Client.cpp`
+- `src/Server.cpp`
+
+## Tareas
+- [ ] `shouldKeepAlive()`
+- [ ] `reset()` en Client
+- [ ] Lógica en handleClientWrite
+
+## Puntos: 3","enhancement,epic-7-advanced","v0.7-advanced",
+"[Epic 7] #42: Implementar main.cpp","## Descripción
+Implementar punto de entrada con opciones CLI.
+
+## Archivos
+- `src/main.cpp`
+
+## Tareas
+- [ ] Parsear argumentos
+- [ ] Banner ASCII
+- [ ] Setup de señales
+- [ ] Manejo de errores
+
+## Puntos: 3","enhancement,epic-7-advanced","v0.7-advanced",
+"#43: Suite de tests automatizada","## Descripción
+Crear suite de tests de integración.
+
+## Archivos
+- `tests/test_suite.sh`
+
+## Tareas
+- [ ] Tests de métodos HTTP
+- [ ] Tests de errores
+- [ ] Tests de CGI
+- [ ] Tests de concurrencia
+
+## Puntos: 5","testing,documentation","",

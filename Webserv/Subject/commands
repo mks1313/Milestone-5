@@ -1,0 +1,54 @@
+para construir el entorno:
+make docker-build-ubuntu
+
+para levantar el entorno y poder comenzar a ejecutar:
+make docker-start-ubuntu
+
+para compilar la aplicacion del webserv dentro del entorno pero lanzando
+el comando externamente desde la maquina local:
+make docker-compile
+
+para abrir el shell dentro del entorno:
+make docker-shell
+
+para detener el entorno:
+make docker-stop-ubuntu
+
+para detener y eliminar el entorno:
+make docker-clean-all
+
+correr:
+local:
+./bin/webserv config/webserv.conf
+local y en segudo plano
+./bin/webserv config/webserv.conf &
+
+correr dentro de docker:
+make docker-run
+
+
+para revisar procesos del sistema:
+htop
+top
+
+para ver entornos de docker en ejecucion:
+docker ps -a
+
+para ver las imagenes que tenemos dentro del entorno de docker:
+docker images
+
+
+volcado de la salida:
+stdbuf -o0 -e0 ./bin/webserv config/webserv.conf 2>&1 | split -b 1M -d --additional-suffix=.log - bin/log_fichero_
+
+
+proceso en segundo plano:
+./webserv config.conf > webserv.log 2>&1 &
+nohup ./webserv config.conf > webserv.log 2>&1 &
+
+Comando	Acción
+jobs	Muestra los procesos en segundo plano de la sesión actual.
+fg	Trae el proceso de vuelta al primer plano (foreground).
+bg	Reanuda un proceso pausado en segundo plano.
+pgrep webserv	Te da el PID (ID de proceso) de tu servidor.
+kill -9 <PID>	Fuerza el cierre del servidor si se queda colgado.
