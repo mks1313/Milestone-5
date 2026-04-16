@@ -3,7 +3,7 @@
 Welcome to my **Milestone 5** repository at **Campus 42 Barcelona**! In this milestone, I have worked on the following projects: **Inception**, **Webserv**, and **CPP Modules (05-09)**. These projects allow me to showcase my skills in **DevOps**, **web server implementation**, **advanced C++ programming**, and **system-level networking**.
 
 <p align="center">
-  <img src="docs/WEBSERV-42.png" alt="Webserv 42" width="600">
+  <img src="Webserv/docs/WEBSERV-42.png" alt="Webserv 42" width="600">
 </p>
 
 
