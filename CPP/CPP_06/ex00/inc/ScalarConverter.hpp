@@ -6,7 +6,7 @@
 /*   By: mmarinov <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/16 18:48:51 by mmarinov          #+#    #+#             */
-/*   Updated: 2026/04/25 14:58:18 by mmarinov         ###   ########.fr       */
+/*   Updated: 2026/04/27 22:24:03 by mmarinov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,10 @@ class ScalarConverter
 		static bool isFloatLiteral(const std::string& literal);
 		static bool isDoubleLiteral(const std::string& literal);
 
-		static void printChar(double value, t_type type);
-		static void printInt(double value, t_type type);
-		static void printFloat(double value, t_type type);
-		static void printDouble(double value, t_type type);
+		static void printChar(double value, t_type type, const std::string& literal);
+		static void printInt(double value, t_type type, const std::string& literal);
+		static void printFloat(double value, t_type type, const std::string& literal);
+		static void printDouble(double value, t_type type, const std::string& literal);
 
 	public:
 		static void convert(const std::string& literal);
