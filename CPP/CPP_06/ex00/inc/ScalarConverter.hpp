@@ -6,11 +6,17 @@
 /*   By: mmarinov <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/16 18:48:51 by mmarinov          #+#    #+#             */
-/*   Updated: 2026/04/27 22:24:03 by mmarinov         ###   ########.fr       */
+/*   Updated: 2026/05/03 16:31:09 by mmarinov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <string>
+#include <cctype>
+#include <iomanip>
+#include <iostream>
+#include <climits>
+#include <cstdlib>
+#include <cmath>
 
 #ifndef SCALARCONVERTER_HPP
 # define SCALARCONVERTER_HPP

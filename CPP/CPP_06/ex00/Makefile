@@ -6,7 +6,7 @@
 #    By: mmarinov <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/11/13 18:52:38 by mmarinov          #+#    #+#              #
-#    Updated: 2026/04/16 19:35:12 by mmarinov         ###   ########.fr        #
+#    Updated: 2026/05/03 16:28:23 by mmarinov         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,7 +28,7 @@ SRC_D     := src
 OBJ_D     := objs
 
 # ==== Sources  ====
-SRCS      := main.cpp Bureaucrat.cpp
+SRCS      := main.cpp ScalarConverter.cpp
 
 # ==== Objects / Deps ====
 OBJS      := $(SRCS:%.cpp=$(OBJ_D)/%.o)

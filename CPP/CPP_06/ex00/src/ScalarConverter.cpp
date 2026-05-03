@@ -6,15 +6,18 @@
 /*   By: mmarinov <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/16 19:34:15 by mmarinov          #+#    #+#             */
-/*   Updated: 2026/04/27 23:00:53 by mmarinov         ###   ########.fr       */
+/*   Updated: 2026/05/03 17:02:25 by mmarinov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ScalarConverter.hpp"
+#include "Colors.hpp"
 #include <cctype>
 #include <iomanip>
-#include <iostream>
 #include <climits>
+#include <cstdlib>
+#include <cmath>
+#include <iostream>
 
 bool ScalarConverter::isPseudoLiteral(const std::string& literal)
 {
@@ -112,96 +115,103 @@ t_type ScalarConverter::detectType(const std::string& literal) {
 	return TYPE_INVALID;
 }
 
-void ScalarConverter::printChar(double value, t_type type, std::string& literal)
-{
-	(void)literal;
-	if (type = TYPE_PSEUDO_LITERAL || type == TYPE_INVALID)
-	{
-		std::cout << "char: impossible" << std::endl;
-		return ;
-	}
-	if (value < 0 || value > 127)
-	{
-		std::cout << "char: impossible" << std::endl;
-		return ;
-	}
-	if (!isprint(static_cast<int>(value)))
-	{
-		std::cout << "char: impossible" << std::endl;
-		return ;
-	}
-	std::cout << "char: '" << static_cast<int>(value) << "'" << std::endl;
-}
-
-void ScalarConverter::printInt(double value, t_type type, std::string& literal)
+void ScalarConverter::printChar(double value, t_type type, const std::string& literal)
 {
 	(void)literal;
 	if (type == TYPE_PSEUDO_LITERAL || type == TYPE_INVALID)
 	{
-		std::cout << "int: impossible" << std::endl;
+		std::cout << CYAN << BOLD << "char: " << RESET << RED << "impossible" << RESET << std::endl;
 		return ;
 	}
-	if (value < static_cast<int>(INT_MIN) || value > static_cast<int>(INT_MAX))
+	if (value < 0 || value > 127 || value != static_cast<int>(value))
 	{
-		std::cout << "int: impossible" << std::endl;
+		std::cout << CYAN << BOLD << "char: " << RESET << RED << "impossible" << RESET << std::endl;
 		return ;
 	}
-	std::cout << "int: '" << static_cast<int>(value) << std::endl;
+	if (!isprint(static_cast<unsigned char>(value)))
+	{
+		std::cout << CYAN << BOLD << "char: " << RESET << YELLOW << "Non displayable" << RESET << std::endl;
+		return ;
+	}
+	std::cout << CYAN << BOLD << "char: " << RESET << GREEN << "'" << static_cast<char>(value) << "'" << RESET << std::endl;
 }
 
-void ScalarConverter::printFloat(double value, t_type type, std::string& literal)
+void ScalarConverter::printInt(double value, t_type type, const std::string& literal)
 {
-	const std::string str = literal;
+	(void)literal;
+	if (type == TYPE_PSEUDO_LITERAL || type == TYPE_INVALID)
+	{
+		std::cout << CYAN << BOLD << "int: " << RESET << RED << "impossible" << RESET << std::endl;
+		return ;
+	}
+	if (value < static_cast<double>(INT_MIN) || value > static_cast<double>(INT_MAX))
+	{
+		std::cout << CYAN << BOLD << "int: " << RESET << RED << "impossible" << RESET << std::endl;
+		return ;
+	}
+	std::cout << CYAN << BOLD << "int: " << RESET << GREEN << static_cast<int>(value) << RESET << std::endl;
+}
+
+void ScalarConverter::printFloat(double value, t_type type, const std::string& literal)
+{
+	const std::string& str = literal;
 	if (type == TYPE_PSEUDO_LITERAL)
 	{
 		if (str == "nan" || str == "nanf")
-			std::cout << "float: nanf" << std::endl;
+			std::cout << CYAN << BOLD << "float: " << RESET << YELLOW << "nanf" << RESET << std::endl;
 		else if (str == "+inf" || str == "+inff")
-			std::cout << "float: +inff" << std::endl;
-		else 
-			std::cout << "float: -inff" << std::endl;
-		return ;
-	}
-	if (type == TYPE_INVALID)
-	{
-		std::cout << "float: impossible" << std::endl;
-		return ;
-	}
-	std::cout << "float: " << static_cast<float>(value) << "f" << std::endl;
-}
-
-void ScalarConverter::printDouble(double value, t_type type, std::string& literal)
-{
-	if (type == TYPE_PSEUDO_LITERAL)
-	{
-		if (str == "nan" || str == "nanf")
-			std::cout << "double: nan" << std::endl;
-		else if (str == "+inf" || str == "+inff")
-			std::cout << "double: +inf" << std::endl;
+			std::cout << CYAN << BOLD << "float: " << RESET << YELLOW << "+inff" << RESET << std::endl;
 		else
-			std::cout << "double: -inf" << std::endl;
+			std::cout << CYAN << BOLD << "float: " << RESET << YELLOW << "-inff" << RESET << std::endl;
 		return ;
 	}
 	if (type == TYPE_INVALID)
 	{
-		std::cout << "double: impossible" << std::endl;
+		std::cout << CYAN << BOLD << "float: " << RESET << RED << "impossible" << RESET << std::endl;
 		return ;
 	}
-	std::cout << "double: '" << value << std::endl;
+	if (value == std::floor(value))
+		std::cout << CYAN << BOLD << "float: " << RESET << GREEN << std::fixed << std::setprecision(1) << static_cast<float>(value) << "f" << RESET << std::endl;
+	else
+		std::cout << CYAN << BOLD << "float: " << RESET << GREEN << static_cast<float>(value) << "f" << RESET << std::endl;
+}
+
+void ScalarConverter::printDouble(double value, t_type type, const std::string& literal)
+{
+	const std::string& str = literal;
+	if (type == TYPE_PSEUDO_LITERAL)
+	{
+		if (str == "nan" || str == "nanf")
+			std::cout << CYAN << BOLD << "double: " << RESET << YELLOW << "nan" << RESET << std::endl;
+		else if (str == "+inf" || str == "+inff")
+			std::cout << CYAN << BOLD << "double: " << RESET << YELLOW << "+inf" << RESET << std::endl;
+		else
+			std::cout << CYAN << BOLD << "double: " << RESET << YELLOW << "-inf" << RESET << std::endl;
+		return ;
+	}
+	if (type == TYPE_INVALID)
+	{
+		std::cout << CYAN << BOLD << "double: " << RESET << RED << "impossible" << RESET << std::endl;
+		return ;
+	}
+	if (value == std::floor(value))
+		std::cout << CYAN << BOLD << "double: " << RESET << GREEN << std::fixed << std::setprecision(1) << value << RESET << std::endl;
+	else
+		std::cout << CYAN << BOLD << "double: " << RESET << GREEN << value << RESET << std::endl;
 }
 
 void ScalarConverter::convert(const std::string& literal)
 {
 	double value;
-	const std::string str = literal;
+	const std::string& str = literal;
 	t_type type = detectType(str);
 	
 	if (type == TYPE_INVALID)
 	{
-		std::cout << "char: impossible" << std::endl;
-		std::cout << "int: impossible" << std::endl;
-		std::cout << "float: impossible" << std::endl;
-		std::cout << "double: impossible" << std::endl;
+		std::cout << CYAN << BOLD << "char: " << RESET << GREEN << "impossible" << RESET << std::endl;
+		std::cout << CYAN << BOLD << "int: " << RESET << GREEN << "impossible" << RESET << std::endl;
+		std::cout << CYAN << BOLD << "float: " << RESET << GREEN << "impossible" << RESET << std::endl;
+		std::cout << CYAN << BOLD << "double: " << RESET << GREEN << "impossible" << RESET << std::endl;
 		return ;
 	}
 	if (type == TYPE_CHAR)
