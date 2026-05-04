@@ -6,7 +6,7 @@
 /*   By: mmarinov <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/04 20:51:09 by mmarinov          #+#    #+#             */
-/*   Updated: 2026/05/04 21:19:33 by mmarinov         ###   ########.fr       */
+/*   Updated: 2026/05/04 21:27:24 by mmarinov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,10 @@ int main()
 	Data* recovered = Serializer::deserialize(raw);
 
 	std::cout << YELLOW << "--------- AFTER ---------" << RESET << std::endl;
-	std::cout << BLUE "ptr:   " << RESET << RED << original        << RESET << std::endl;
-	std::cout << BLUE "id:    " << RESET << RED << original->id    << RESET << std::endl;
-	std::cout << BLUE "name:  " << RESET << RED << original->name  << RESET << std::endl;
-	std::cout << BLUE "value: " << RESET << RED << original->value << RESET << std::endl;
+	std::cout << BLUE "ptr:   " << RESET << RED << recovered        << RESET << std::endl;
+	std::cout << BLUE "id:    " << RESET << RED << recovered->id    << RESET << std::endl;
+	std::cout << BLUE "name:  " << RESET << RED << recovered->name  << RESET << std::endl;
+	std::cout << BLUE "value: " << RESET << RED << recovered->value << RESET << std::endl;
 
 	std::cout << MAGENTA <<"\nPointer match: " <<  RESET 
 		<< (original == recovered ? GREEN "YES" RESET : RED "NO" RESET) << std::endl;

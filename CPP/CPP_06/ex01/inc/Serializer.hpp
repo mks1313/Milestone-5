@@ -6,7 +6,7 @@
 /*   By: mmarinov <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/04 20:10:01 by mmarinov          #+#    #+#             */
-/*   Updated: 2026/05/04 21:23:45 by mmarinov         ###   ########.fr       */
+/*   Updated: 2026/05/04 21:29:43 by mmarinov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define SERIALIZER_HPP
 
 #include <stdint.h>
-#include <Data.hpp>
+#include "Data.hpp"
 
 class Serializer
 {

@@ -6,7 +6,7 @@
 /*   By: mmarinov <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/04 20:08:48 by mmarinov          #+#    #+#             */
-/*   Updated: 2026/05/04 20:12:07 by mmarinov         ###   ########.fr       */
+/*   Updated: 2026/05/04 21:28:30 by mmarinov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@
 #include <string>
 
 struct Data {
-int	id;
-std::string name;
-float value;
+int			id;
+std::string	name;
+float		value;
 };
 
 #endif
