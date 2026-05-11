@@ -6,14 +6,9 @@
 /*   By: mmarinov <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/11 20:06:15 by mmarinov          #+#    #+#             */
-/*   Updated: 2026/05/11 20:15:39 by mmarinov         ###   ########.fr       */
+/*   Updated: 2026/05/11 21:40:58 by mmarinov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-#include "iter.hpp"
-#include "Colors.hpp"
-
-#include <iostream>
 
 #include "iter.hpp"
 #include "Colors.hpp"
