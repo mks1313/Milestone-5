@@ -6,77 +6,71 @@
 #    By: mmarinov <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/12/26 17:26:05 by mmarinov          #+#    #+#              #
-#    Updated: 2025/12/27 16:44:37 by mmarinov         ###   ########.fr        #
+#    Updated: 2026/06/12 15:00:00 by mmarinov         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-# MAKEFLAGS += --silent
+MAKEFLAGS += --silent
 
 # ==== Project ====
-NAME        := CPP-05
+COMPOSE   := srcs/docker-compose.yml
+ENV       := srcs/.env
+DATA_DIR  := /home/mmarinov/data
 
-# ==== Compiler & Flags ====
-CXX         := c++
-CXXFLAGS    := -Wall -Wextra -Werror -std=c++98 -pedantic-errors
-INC         := -Iinc
-DEPFLAGS    := -MMD -MP
-RM          := rm -rf
-
-# ==== Extras ====
-# debug: CXXFLAGS += -g3 -O0
-# debug: re
-#
-# asan: CXXFLAGS += -g3 -O0 -fsanitize=address
-# asan: re
-
-# ==== Directories ====
-SRC_D       := src
-OBJ_D       := objs
-
-# ==== Sources ====
-SRCS        := main.cpp & *.cpp
-
-# ==== Objects / Deps ====
-OBJS        := $(SRCS:%.cpp=$(OBJ_D)/%.o)
-DEPS        := $(OBJS:.o=.d)
+# ==== Volumes dirs ====
+MARIADB_DIR  := $(DATA_DIR)/mariadb
+WORDPRESS_DIR := $(DATA_DIR)/wordpress
 
 # ==== Colors ====
-COL_RESET   := \033[0m
-COL_BLUE    := \033[1;34m
-COL_GREEN   := \033[1;32m
-COL_RED     := \033[1;31m
-COL_YELLOW  := \033[1;33m
+COL_RESET  := \033[0m
+COL_BLUE   := \033[1;34m
+COL_GREEN  := \033[1;32m
+COL_RED    := \033[1;31m
+COL_YELLOW := \033[1;33m
 
-# ==== Default rule ====
-all: $(NAME)
+# ==== Default ====
+all: up
 
-# ==== Link ====
-$(NAME): $(OBJS)
-	@$(CXX) $(CXXFLAGS) $(OBJS) -o $(NAME)
-	@printf "$(COL_GREEN)Built:$(COL_RESET) %s\n" "$(NAME)"
+# ==== Up ====
+up: $(MARIADB_DIR) $(WORDPRESS_DIR)
+	@printf "$(COL_GREEN)Starting Inception...$(COL_RESET)\n"
+	@docker compose -f $(COMPOSE) up -d --build
 
-# ==== Compile ====
-$(OBJ_D)/%.o: $(SRC_D)/%.cpp | $(OBJ_D)
-	@$(CXX) $(CXXFLAGS) $(INC) $(DEPFLAGS) -c $< -o $@
-	@printf "$(COL_BLUE)Compiled:$(COL_RESET) %s\n" "$<"
+# ==== Down ====
+down:
+	@printf "$(COL_YELLOW)Stopping Inception...$(COL_RESET)\n"
+	@docker compose -f $(COMPOSE) down
 
-# ==== Create object directory ====
-$(OBJ_D):
-	@mkdir -p $(OBJ_D)
+# ==== Create volume dirs ====
+$(MARIADB_DIR):
+	@mkdir -p $(MARIADB_DIR)
+	@printf "$(COL_BLUE)Created:$(COL_RESET) %s\n" "$(MARIADB_DIR)"
 
-# ==== Clean ====
-clean:
-	@$(RM) $(OBJ_D)
-	@printf "$(COL_RED)Cleaned objects$(COL_RESET)\n"
+$(WORDPRESS_DIR):
+	@mkdir -p $(WORDPRESS_DIR)
+	@printf "$(COL_BLUE)Created:$(COL_RESET) %s\n" "$(WORDPRESS_DIR)"
 
+# ==== Clean (stop + remove volumes) ====
+clean: down
+	@printf "$(COL_RED)Removing volumes...$(COL_RESET)\n"
+	@docker compose -f $(COMPOSE) down -v
+
+# ==== Fclean (clean + data dirs + images) ====
 fclean: clean
-	@$(RM) $(NAME)
-	@printf "$(COL_YELLOW)Removed binary:$(COL_RESET) %s\n" "$(NAME)"
+	@printf "$(COL_RED)Removing images and data...$(COL_RESET)\n"
+	@docker compose -f $(COMPOSE) down --rmi all
+	@rm -rf $(DATA_DIR)
+	@printf "$(COL_RED)Removed:$(COL_RESET) %s\n" "$(DATA_DIR)"
 
+# ==== Re ====
 re: fclean all
 
-# ==== Phony ====
-.PHONY: all clean fclean re debug asan
+# ==== Logs ====
+logs:
+	@docker compose -f $(COMPOSE) logs -f
 
-# ==== Auto dependencies ====
--include $(DEPS)
+# ==== Status ====
+status:
+	@docker compose -f $(COMPOSE) ps
+
+.PHONY: all up down clean fclean re logs status
