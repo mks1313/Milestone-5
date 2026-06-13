@@ -1,0 +1,280 @@
+services:
+  nginx:
+    build:
+      context: ./requirements/nginx
+      dockerfile: Dockerfile
+      args:
+        NGINX_VERSION: "1.26"
+    container_name: ${AI}.www/${AI}
+    image: nginx:1.26
+    pull_policy: never
+    ports:
+      - "443:443"
+    volumes:
+      - wordpress_data:/var/www/html:ro,nocopy
+    networks:
+      - inception_network
+    depends_on:
+      - wordpress
+    restart: unless-stopped
+    env_file:
+      - .env
+
+  mariadb:
+    build:
+      context: ./requirements/mariadb
+      dockerfile: Dockerfile
+      args:
+        MARIADB_VERSION: "11.7"
+    container_name: mariadb
+    image: mariadb:11.7
+    pull_policy: never
+    volumes:
+      - mariadb_data:/var/lib/mysql:nocopy
+    networks:
+      - inception_network
+    restart: unless-stopped
+    env_file:
+      - .env
+    secrets:
+      - db_password
+      - db_root_password
+    environment:
+      - MYSQL_ROOT_PASSWORD_FILE=/run/secrets/db_root_password
+      - MYSQL_PASSWORD_FILE=/run/secrets/db_password
+
+  wordpress:
+    build:
+      context: ./requirements/wordpress
+      dockerfile: Dockerfile
+      args:
+        WORDPRESS_VERSION: "6.7"
+    container_name: wordpress
+    image: wordpress:6.7
+    pull_policy: never
+    volumes:
+      - wordpress_data:/var/www/html:nocopy
+    networks:
+      - inception_network
+    depends_on:
+      - mariadb
+    restart: unless-stopped
+    env_file:
+      - .env
+    secrets:
+      - db_password
+      - wp_admin_password
+      - wp_user_password
+    environment:
+      - MYSQL_PASSWORD_FILE=/run/secrets/db_password
+      - WP_ADMIN_PASSWORD_FILE=/run/secrets/wp_admin_password
+      - WP_USER_PASSWORD_FILE=/run/secrets/wp_user_password
+
+  # -------------------------------------------------------------------------- #
+  # Redis - Cache Server
+  # -------------------------------------------------------------------------- #
+  redis:
+    build:
+      context: ./requirements/bonus/redis
+      dockerfile: Dockerfile
+      args:
+        REDIS_VERSION: "7.8"
+    container_name: redis
+    image: redis:7.8
+    pull_policy: never
+    networks:
+      - inception_network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # -------------------------------------------------------------------------- #
+  # FTP Server - vsftpd
+  # -------------------------------------------------------------------------- #
+  ftp:
+    build:
+      context: ./requirements/bonus/ftp
+      dockerfile: Dockerfile
+      args:
+        VSFTPD_VERSION: "3.0.3"
+    container_name: ftp
+    image: ftp:3.0.3
+    pull_policy: never
+    ports:
+      - "21:21"
+      - "21100-21110:21100-21110"
+    volumes:
+      - wordpress_data:/var/www/html:nocopy
+    networks:
+      - inception_network
+    restart: unless-stopped
+    env_file:
+      - .env
+    secrets:
+      - ftp_password
+    environment:
+      - FTP_PASSWORD_FILE=/run/secrets/ftp_password
+
+  # -------------------------------------------------------------------------- #
+  # Adminer - Database Management
+  # -------------------------------------------------------------------------- #
+  adminer:
+    build:
+      context: ./requirements/bonus/adminer
+      dockerfile: Dockerfile
+      args:
+        ADMINER_VERSION: "4.8.1"
+    container_name: adminer
+    image: adminer:4.8.1
+    pull_policy: never
+    ports:
+      - "8080:8080"
+    networks:
+      - inception_network
+    depends_on:
+      - mariadb
+    restart: unless-stopped
+
+  # -------------------------------------------------------------------------- #
+  # Static Site - Portfolio/Resume
+  # -------------------------------------------------------------------------- #
+  static-site:
+    build:
+      context: ./requirements/bonus/static-site
+      dockerfile: Dockerfile
+      args:
+        STATIC_SITE_VERSION: "v1.0"
+    container_name: static-site
+    image: static-site:v1.0
+    pull_policy: never
+    ports:
+      - "8443:443"
+    networks:
+      - inception_network
+    restart: unless-stopped
+    env_file:
+      - .env
+
+  # -------------------------------------------------------------------------- #
+  # Portainer - Docker Management Dashboard
+  # -------------------------------------------------------------------------- #
+  portainer:
+    build:
+      context: ./requirements/bonus/portainer
+      dockerfile: Dockerfile
+      args:
+        PORTAINER_VERSION: "2.39"
+    container_name: portainer
+    image: portainer:2.39
+    pull_policy: never
+    ports:
+      - "9443:9443"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - portainer_data:/data:nocopy
+    networks:
+      - inception_network
+    restart: unless-stopped
+    # LA SOLUCIÓN: Declaramos toda la cadena de ejecución para que no se rompa el binario
+    command: /opt/portainer/portainer --bind-https=:9443 --data=/data --admin-password-file /run/secrets/portainer_password
+    secrets:
+      - portainer_password
+
+  # -------------------------------------------------------------------------- #
+  # cAdvisor - Container Monitoring
+  # -------------------------------------------------------------------------- #
+  cadvisor:
+    build:
+      context: ./requirements/bonus/cadvisor
+      dockerfile: Dockerfile
+      args:
+        CADVISOR_VERSION: "v0.55"
+    container_name: cadvisor
+    image: cadvisor:v0.55
+    pull_policy: never
+    privileged: true
+    devices:
+      - /dev/kmsg
+    ports:
+      - "8081:8080"
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:ro
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+      - /etc/machine-id:/etc/machine-id:ro
+    networks:
+      - inception_network
+    restart: unless-stopped
+
+  # -------------------------------------------------------------------------- #
+  # MailHog - Email Testing Server
+  # -------------------------------------------------------------------------- #
+  mailhog:
+    build:
+      context: ./requirements/bonus/mailhog
+      dockerfile: Dockerfile
+      args:
+        MAILHOG_VERSION: "v1.0.0"
+    container_name: mailhog
+    image: mailhog:v1.0.0
+    pull_policy: never
+    ports:
+      - "1025:1025"
+      - "8025:8025"
+    networks:
+      - inception_network
+    restart: unless-stopped
+
+# ============================================================================ #
+#                                 NETWORKS                                      #
+# ============================================================================ #
+networks:
+  inception_network:
+    driver: bridge
+    name: inception_network
+
+# ============================================================================ #
+#                                 VOLUMES                                       #
+# ============================================================================ #
+volumes:
+  wordpress_data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /home/mmarinov/data/wordpress
+
+  mariadb_data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /home/mmarinov/data/mariadb
+
+  portainer_data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /home/mmarinov/data/portainer
+
+# ============================================================================ #
+#                                 SECRETS                                       #
+# ============================================================================ #
+secrets:
+  db_password:
+    file: ../secrets/db_password.txt
+  db_root_password:
+    file: ../secrets/db_root_password.txt
+  wp_admin_password:
+    file: ../secrets/wp_admin_password.txt
+  wp_user_password:
+    file: ../secrets/wp_user_password.txt
+  ftp_password:
+    file: ../secrets/ftp_password.txt
+  portainer_password:
+    file: ../secrets/portainer_password.txt
